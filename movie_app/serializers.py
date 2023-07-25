@@ -5,7 +5,7 @@ from movie_app.models import *
 class DirectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Director
-        fields = 'name'
+        fields = ['name']
 
 
 class MovieSerializer(serializers.ModelSerializer):
@@ -18,3 +18,9 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ['text', 'movie']
+
+
+class MovieReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['movie', 'text', 'stars']
