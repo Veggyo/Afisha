@@ -6,7 +6,7 @@ from .serializers import *
 
 @api_view(['GET'])
 def directors_list_api_view(request):
-    directors = Director.objects.all()
+    directors = Director.objects.select_related('movies').all()
     data = DirectorSerializer(instance=directors, many=True).data
     return Response(data.data)
 
