@@ -6,7 +6,7 @@ from .serializers import *
 
 @api_view(['GET'])
 def directors_list_api_view(request):
-    directors = Director.objects.select_related('movies').all()
+    directors = Director.objects.prefetch_related('movies').all()
     data = DirectorSerializer(instance=directors, many=True).data
     return Response(data.data)
 
@@ -25,7 +25,7 @@ def director_detail(request, id):
 
 @api_view(['GET'])
 def movie_list_api_view(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.all().prefetch_related('reviews')
     data = MovieSerializer(instance=movies, many=True).data
     return Response(data)
 
@@ -63,7 +63,6 @@ def review_detail(request, id):
 
 @api_view(['GET'])
 def movie_reviews(request):
-    review = Review.objects.all()
-    data = MovieReviewSerializer(instance=review, many=True).data
-
+    movies = Movie.objects.all().prefetch_related('reviews')
+    data = MovieReviewSerializer(instance=movies, many=True).data
     return Response(data)
