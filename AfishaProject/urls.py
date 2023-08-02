@@ -1,15 +1,16 @@
-from movie_app import views
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 
 urlpatterns = [
-    path('', views.movie_list_api_view),
+    path('', include('movie_app.urls')),
     path('admin/', admin.site.urls),
-    path('api/v1/directors/', views.directors_list_api_view),
-    path('api/v1/directors/<int:id>/', views.director_detail),
-    path('api/v1/movies/', views.movie_list_api_view),
-    path('api/v1/movies/<int:id>/', views.movie_detail),
-    path('api/v1/reviews/', views.reviews_list_api_view),
-    path('api/v1/reviews/<int:id>/', views.review_detail),
-    path('api/v1/movies/reviews/', views.movie_reviews)
+    path('api/v1/directors/', include('movie_app.urls')),
+    path('api/v1/directors/<int:id>/', include('movie_app.urls')),
+    path('api/v1/movies/', include('movie_app.urls')),
+    path('api/v1/movies/<int:id>/', include('movie_app.urls')),
+    path('api/v1/reviews/', include('movie_app.urls')),
+    path('api/v1/reviews/<int:id>/', include('movie_app.urls')),
+    path('api/v1/movies/reviews/', include('movie_app.urls')),
+    path('api/v1/users/', include('users.urls'))
 ]

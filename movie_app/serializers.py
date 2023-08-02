@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from movie_app.models import *
+from rest_framework.exceptions import ValidationError
 
 
 class DirectorSerializer(serializers.ModelSerializer):
@@ -47,7 +48,13 @@ class MovieValidateSerializer(serializers.Serializer):
 
 
 class ReviewValidateSerializer(serializers.Serializer):
-    text = serializers.CharField()
-    movie = serializers.ListField(child=serializers.CharField(min_length=3))
+    text = serializers.CharField(max_length=255, min_length=2)
+    movie_id = serializers.IntegerField(min_value=1)
     stars = serializers.IntegerField(min_value=1)
 
+    def validate_category_id(self, movie_id):
+        try:
+            Movie.objects.get(id=movie_id)
+        except Movie.DoesNotExist:
+            raise ValidationError('Category does not exists')
+        return movie_id
