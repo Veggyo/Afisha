@@ -1,2 +1,17 @@
 from django.db import models
-# Create your models here.
+from django.contrib.auth.models import User
+import random
+
+
+class ConfirmToken(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    code = models.CharField(max_length=6, unique=True)
+    is_using = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = self.generate_code()
+        super().save(*args, **kwargs)
+
+    def generate_code(self):
+        return str(random.randint(100000, 999999))

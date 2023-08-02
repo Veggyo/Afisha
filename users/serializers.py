@@ -19,3 +19,7 @@ class RegistrationValidateSerializer(serializers.Serializer):
             raise ValidationError('User already exists')
         except User.DoesNotExist:
             return username
+
+
+class ConfirmTokenSerializer(serializers.Serializer):
+    confirming_code = serializers.CharField(max_length=6)

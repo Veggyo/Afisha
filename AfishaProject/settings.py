@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'movie_app',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'users'
 ]
 
 REST_FRAMEWORK = {
