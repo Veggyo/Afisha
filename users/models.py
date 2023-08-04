@@ -15,3 +15,9 @@ class ConfirmToken(models.Model):
 
     def generate_code(self):
         return str(random.randint(100000, 999999))
+
+
+class User(models.Model):
+    username = models.CharField(max_length=15)
+    password = models.CharField(max_length=8)
+    email = models.EmailField()
